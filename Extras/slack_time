@@ -1,0 +1,332 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package soelab7;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Scanner;
+import static soelab7.SOElab7.dfs;
+
+/**
+ *
+ * @author placements2018
+ */
+public class SOElab7 {
+
+    static void dfs(int u, ArrayList<Integer> topo, int vis[], ArrayList<ArrayList<Integer>> adj) {
+        vis[u] = 1;
+        int i;
+        for (i = 0; i < adj.get(u).size(); i++) {
+            if (vis[adj.get(u).get(i)] == 0) {
+                dfs(adj.get(u).get(i), topo, vis, adj);
+            }
+        }
+        topo.add(u);
+    }
+    static void all_paths(int u,int vis[], ArrayList<ArrayList<Integer>> adj,ArrayList<ArrayList<Integer>> alp,ArrayList<Integer> cp)
+    {
+        vis[u]=1;
+        cp.add(u);
+        //System.out.println(u);
+        if(adj.get(u).size()==0)
+        {
+            //System.out.println("********");
+            ArrayList<Integer> yy=new ArrayList<Integer>();
+            for(int i=0;i<cp.size();i++)
+            {
+                yy.add(cp.get(i));
+            }
+            alp.add(yy);
+        }
+        for(int i=0;i<adj.get(u).size();i++)
+        {
+            if(vis[adj.get(u).get(i)]==0)
+            {
+                all_paths(adj.get(u).get(i),vis,adj,alp,cp);
+            }
+        }
+        cp.remove(cp.get(cp.size()-1));
+        vis[u]=0;
+    }
+
+    public static void main(String args[]) throws FileNotFoundException, IOException {
+        String s = "C:\\Users\\RAGHAV SABOO\\Documents\\NetBeansProjects\\SOElab7\\src\\soelab7\\input.txt";
+        FileReader fr = new FileReader(s);
+        BufferedReader br = new BufferedReader(fr);
+        String ln;
+        HashMap<Integer, String> hm = new HashMap<Integer, String>();
+        HashMap<String, Integer> rhm = new HashMap<String, Integer>();
+        int x = 0, i;
+        br.mark(1000);
+        while ((ln = br.readLine()) != null) {
+            if (ln.matches("Activity.*")) {
+                continue;
+            } else {
+                s = "";
+                for (i = 0; i < ln.length(); i++) {
+                    if (ln.charAt(i) == ' ') {
+                        break;
+                    }
+                    s = s + ln.charAt(i);
+                }
+                //System.out.println(s+" "+x);
+                hm.put(x, s);
+                rhm.put(s, x);
+                x++;
+            }
+        }
+        //System.out.println(x);
+        br.reset();
+        int d[] = new int[x];
+        int j = 0;
+        int edg[][] = new int[1005][2];
+        int m = 0;
+        while ((ln = br.readLine()) != null) {
+            if (ln.matches("Activity.*")) {
+                continue;
+            } else {
+                int c = 0;
+                for (i = 0; i < ln.length(); i++) {
+                    if (ln.charAt(i) == ' ') {
+                        c++;
+                    }
+                    if (c == 2) {
+                        break;
+                    }
+                }
+                int no = 0;
+                i++;
+                for (; i < ln.length(); i++) {
+                    no *= 10;
+                    no += (ln.charAt(i) - '0');
+                }
+
+                for (i = 0; i < ln.length(); i++) {
+                    if (ln.charAt(i) == ' ') {
+                        break;
+                    }
+                }
+                i++;
+                // System.out.println(i);
+                s = "";
+                for (; i < ln.length(); i++) {
+                    if (ln.charAt(i) == ' ') {
+                        break;
+                    }
+                    if (ln.charAt(i) == ',') {
+                        edg[m][0] = rhm.get(s);
+                        edg[m][1] = j;
+                        m++;
+                        s = "";
+                    }
+                    //else
+                    if (ln.charAt(i) != '-' && ln.charAt(i) != ',') {
+                        s = s + ln.charAt(i);
+                    }
+                }
+                if (rhm.containsKey(s)) {
+                    edg[m][0] = rhm.get(s);
+                    edg[m][1] = j;
+                    m++;
+                }
+                d[j++] = no;
+            }
+        }
+        for (Iterator<Map.Entry<String, Integer>> it = rhm.entrySet().iterator(); it.hasNext();) {
+            Map.Entry mm = it.next();
+            // System.out.println(mm.getKey()+" "+mm.getValue()); 
+        }
+        for (i = 0; i < m; i++) {
+            //System.out.println(d[i]);
+            //System.out.println(edg[i][0] + "  " + edg[i][1]);
+        }
+        Scanner sc = new Scanner(System.in);
+        int n, a, b;
+        n = x;
+        int dur[] = new int[n];
+        int fin[] = new int[n];
+        int start[] = new int[n];
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<ArrayList<Integer>>(n);
+        ArrayList<ArrayList<Integer>> par = new ArrayList<ArrayList<Integer>>(n);
+        ArrayList<Integer> topo = new ArrayList<Integer>();
+        for (i = 0; i < n; i++) {
+            adj.add(new ArrayList<Integer>());
+            par.add(new ArrayList<Integer>());
+        }
+        int vis[] = new int[n];
+        for (i = 0; i < n; i++) {
+            vis[i] = 0;
+        }
+        int str=0;
+        for (i = 1; i <= m; i++) {
+            adj.get(edg[i - 1][0]).add(edg[i - 1][1]);
+            par.get(edg[i - 1][1]).add(edg[i - 1][0]);
+        }
+        for (i = 0; i < n; i++) {
+            dur[i] = d[i];
+        }
+        ArrayList<Integer> start_nodes=new ArrayList<>();
+        int ss = 0;
+        for (i = 0; i < n; i++) {
+            if (par.get(i).size() == 0) {
+                ss = i;
+                str=i;
+                start_nodes.add(i);
+                break;
+            }
+        }
+        for(i=0;i<start_nodes.size();i++)
+        {
+            dfs(start_nodes.get(i), topo, vis, adj);
+        }
+        int tim = 0;
+        for (i = topo.size() - 1; i >= 0; i--) {
+            tim = 0;
+            for (j = 0; j < par.get(topo.get(i)).size(); j++) {
+                if (tim < fin[par.get(topo.get(i)).get(j)]) {
+                    tim = fin[par.get(topo.get(i)).get(j)];
+                }
+            }
+            start[topo.get(i)] = tim;
+            fin[topo.get(i)] = tim + dur[topo.get(i)];
+        }
+        ArrayList<Integer> path = new ArrayList<Integer>();
+        path.add(ss);
+        a = ss;
+        while (true) {
+            tim = 0;
+            b = 0;
+            for (i = 0; i < adj.get(a).size(); i++) {
+                if (tim < fin[adj.get(a).get(i)]) {
+                    tim = fin[adj.get(a).get(i)];
+                    b = adj.get(a).get(i);
+                }
+            }
+            a = b;
+            path.add(a);
+            if (adj.get(a).size() == 0) {
+                break;
+            }
+        }
+        
+        int mx=0;
+        for(i=0;i<n;i++)
+        {
+            if(fin[i]>fin[mx])
+            {
+                mx=i;
+            }
+        }
+        ArrayList<Integer> cpp=new ArrayList<>();
+        a=mx;
+        while(true)
+        {
+            cpp.add(a);
+            if(par.get(a).size()==0)
+            {
+                break;
+            }
+            mx=par.get(a).get(0);
+            for(i=0;i<par.get(a).size();i++)
+            {
+                if(fin[par.get(a).get(i)]>fin[mx])
+                {
+                    mx=par.get(a).get(i);
+                }
+            }
+            a=mx;
+        }
+        path.clear();
+        for(i=cpp.size()-1;i>=0;i--)
+        {
+            path.add(cpp.get(i));
+        }
+        
+        for (i = 0; i < n; i++) {
+            System.out.println(hm.get(i) + "  " + start[i] + "   " + fin[i]);
+        }
+        ArrayList <Integer> cp=new ArrayList<>();
+        System.out.print("Critical path : ");
+        for (i = 0; i < path.size(); i++) {
+            System.out.print(hm.get(path.get(i)));
+            cp.add(path.get(i));
+            if (i < path.size() - 1) {
+                System.out.print(" -> ");
+            }
+        }
+        System.out.println();
+        
+        ArrayList<Integer> tempal=new ArrayList<>();
+        ArrayList<ArrayList<Integer>> alp=new ArrayList<>();
+        for(i=0;i<n;i++)
+        {
+            vis[i]=0;
+        }
+        all_paths(str,vis,adj,alp,tempal);
+        //System.out.println("/////////"+alp.size());
+        for(i=0;i<alp.size();i++)
+        {
+           // System.out.println(alp.get(i).size()+" ");
+            for(j=0;j<alp.get(i).size();j++)
+            {
+                System.out.print(hm.get(alp.get(i).get(j))+" ");
+            }
+            System.out.println();
+        }
+        
+        int slack_time[]=new int[n];
+        for(i=0;i<n;i++)
+        {
+            if(cp.contains(i))
+            {
+                slack_time[i]=0;
+            }
+            else
+            {
+                slack_time[i]=10000;
+            }
+        }
+        int pro_dur=0;
+        for(i=0;i<cp.size();i++)
+        {
+            pro_dur+=dur[cp.get(i)];
+        }
+        
+        for(i=0;i<alp.size();i++)
+        {
+           // System.out.println(alp.get(i).size()+" ");
+            int cs=0;
+            for(j=0;j<alp.get(i).size();j++)
+            {
+                System.out.print(hm.get(alp.get(i).get(j))+" ");
+                cs=cs+dur[alp.get(i).get(j)];
+            }
+            System.out.println(cs);
+            for(j=0;j<alp.get(i).size();j++)
+            {
+                if(cp.contains(alp.get(i).get(j))==false)
+                {
+                    if(slack_time[alp.get(i).get(j)]>pro_dur-cs)
+                    {
+                        slack_time[alp.get(i).get(j)]=pro_dur-cs;
+                    }
+                }
+            }
+        }
+        System.out.println("Slack Times are - ");
+        for(i=0;i<n;i++)
+        {
+            System.out.println(hm.get(i)+"  "+slack_time[i]);
+        }
+        
+    }
+}
