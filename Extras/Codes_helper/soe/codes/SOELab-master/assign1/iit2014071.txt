@@ -1,0 +1,27 @@
+Variables of type: int
+int zy, y = 2;
+int c, d;
+int a, b;
+Total = 6, Initialized = 1
+
+Variables of type: char
+char at, xif;
+Total = 2, Initialized = 0
+
+Variables of type: float
+float c;
+Total = 1, Initialized = 0
+
+Variables of type: double
+double d = 32.5;
+Total = 1, Initialized = 1
+
+Functions: 
+int fact(int a, int b)
+int main()
+void function (int x, char whileat)
+int fun2(double y, float z)
+
+Loops: 1
+
+If-Conditions: 2

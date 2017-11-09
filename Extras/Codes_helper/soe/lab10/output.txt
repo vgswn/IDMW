@@ -1,0 +1,29 @@
+operators
+< 3
+= 5
+> 1
+- 1
+, 2
+; 9
+( 4
+) 4
+[] 6
+{ 3
+} 3
++ 1
+++ 2
+for 2
+if 2
+int 1
+return 1
+operands
+0 1
+1 2
+a 6
+2 1
+t 3
+i 8
+j 7
+n 3
+total operator 50 unique operator17
+total operands 31 unique operands8

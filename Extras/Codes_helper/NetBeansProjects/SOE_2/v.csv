@@ -1,0 +1,7 @@
+author_name,book_name,book_id,issue_status,student_id,due_date,fine
+elipope,scandal,b613,available,NULL,NULL,0
+vips,friends,fri,issued,iit2015038,02/09/2017,0
+khalesi,gameofthrones,got,available,NULL,NULL,0
+himym,How,himymm,issued,iit2015038,09/09/2017,0
+pablo,narcos,narcos,issued,iit2015038,06/09/2017,0
+michael,prisonbreak,sara,issued,iit2015038,12/12/2018,0

@@ -1,0 +1,50 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.relationship;
+
+import java.io.*;
+import java.sql.Timestamp;
+
+/**
+ * Utility Class for creating logs
+ * @author Rishabh Rishu
+ */
+public class _Logger {
+
+    File file;
+    FileWriter fileWriter;
+    /**
+      *
+      * @param fileName address of file to be created wrt location of jar file
+      */	
+    public _Logger(String fileName) {
+        try {
+            file = new File(fileName);
+            file.createNewFile();
+            fileWriter = new FileWriter(file);
+        } catch (Exception e) {
+            System.out.println("Error in creating log file,specify a proper path");
+        }
+
+    }
+
+    /**
+      * A method that performs write operation in a file. Semaphore is used to ensure no redundancy occurs
+      * @param s the string to be written in log file. Timestamp is added before each string
+      * @return true, if logging successful, false otherwise
+      */
+    public synchronized boolean log(String s) {
+        try {
+            Timestamp ts = new Timestamp(System.currentTimeMillis());
+            fileWriter.write(ts + ": " + s + "\n");
+            fileWriter.flush();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+}

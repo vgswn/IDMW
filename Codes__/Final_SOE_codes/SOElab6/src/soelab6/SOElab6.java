@@ -39,7 +39,7 @@ public class SOElab6 {
      */
     public static void main(String[] args) throws FileNotFoundException, IOException {
         // TODO code application logic here
-        String s = "C:\\Users\\RAGHAV SABOO\\Documents\\NetBeansProjects\\Soelab6\\src\\soelab6\\input.c";
+        String s = "input.c";
         FileReader fr = new FileReader(s);
         BufferedReader br = new BufferedReader(fr);
         ArrayList<ArrayList<Integer>> adj = new ArrayList<ArrayList<Integer>>(105);
