@@ -1,7 +1,0 @@
-(int|void|float|char)\s\*?\s?[a-zA-Z0-9()*,; ]*      -fn declaration
-
-
-
-
-
-(?!\b(int |void )\b)\b\w[a-zA-Z0-9]+\([a-zA-Z0-9, ]*\)

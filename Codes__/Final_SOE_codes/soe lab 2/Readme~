@@ -1,8 +1,0 @@
-source code is inside soelab2 folder
-
-import these files in mysql workbench for creating tables
-
-there are 3 tables
-
-database name is - library
-tables are- Book,Users,Bookissued

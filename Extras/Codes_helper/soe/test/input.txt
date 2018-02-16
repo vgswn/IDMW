@@ -1,6 +1,0 @@
-Condition	Rule1	Rule2	Rule3	Rule4	Rule5	Rule6	Rule7	Rule8
-NewCustomer(15%)	Y 	Y 	Y 	Y 	N 	N 	N 	N
-LoyaltyCustomer(10%)	Y 	Y 	N 	N 	Y 	Y 	N 	N
-Coupon	Y 	N 	Y 	N 	Y 	N 	Y 	N
-Actions	 	 	 	 	 	 	 	 
-Discount	X	X	20	15	30	10	20	0
