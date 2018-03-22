@@ -1,4 +1,20 @@
 import operator
+min_sup_count=2
+def support_cal(list_,x):
+    count=0
+    flag=1
+    for ind in x:
+        for i in list_:
+            if not i in ind:
+                flag=0
+        if flag==1:
+            count=count+1
+        flag=1
+    return count
+
+
+
+
 class Tree(object):
     def __init__(self):
         self.child_name=[]
@@ -32,7 +48,7 @@ for i in range(len(x)):
         x[i][j]=int(x[i][j])
 
 for i in inp.keys():
-    if inp[i] <2:
+    if inp[i] <min_sup_count:
         del inp[i]
 
 new=sorted(inp.items(),key=operator.itemgetter(1))
@@ -106,7 +122,7 @@ for j in desc:
     local_subset=[]
     #print(global_dic)
     for index in global_dic.keys():
-        if global_dic[index] >=2:
+        if global_dic[index] >=min_sup_count:
             pattern.append(int(index))
     #print(pattern)
     for m in range(1,(1 << len(pattern))):
@@ -120,5 +136,7 @@ for j in desc:
         temp_subset=[]
 print()
 print('Frequent Itemset')
+for i in inp.keys():
+    print('[',i,'] Support count',inp[i])
 for index in global_subset:
-    print(index)
+    print(index,'Support count = ',support_cal(index,x))
