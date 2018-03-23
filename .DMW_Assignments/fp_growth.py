@@ -13,8 +13,6 @@ def support_cal(list_,x):
     return count
 
 
-
-
 class Tree(object):
     def __init__(self):
         self.child_name=[]
@@ -22,6 +20,7 @@ class Tree(object):
         self.name=''
         self.data = None
         self.parrent=None
+
 
 def print_pattern_base(root,local_dic):
     if root.name=='Root':
@@ -31,6 +30,7 @@ def print_pattern_base(root,local_dic):
             local_dic[root.name]=0
         print(root.name,end=' ')
         print_pattern_base(root.parrent,local_dic)
+
 
 with open('input.txt') as f:
     x = f.readlines()
