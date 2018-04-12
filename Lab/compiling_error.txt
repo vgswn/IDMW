@@ -1,4 +1,0 @@
-C:\Users\RAGHAV SABOO\Desktop\Studies\Data Mining\Lab\bit.cpp: In function 'int main()':
-C:\Users\RAGHAV SABOO\Desktop\Studies\Data Mining\Lab\bit.cpp:9:23: error: 'to_string' was not declared in this scope
-   string s=to_string(t);
-                       ^
